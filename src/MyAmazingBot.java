@@ -2,7 +2,6 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +33,7 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 SendMessage message2 = new SendMessage().setChatId(chat_id).setText("/bash - цитата с башорг");
                 SendMessage message3 = new SendMessage().setChatId(chat_id).setText("/moneta - подкинуть монетку");
                 try {
+                    sendMessage(message1);
                     sendMessage(message2);
                     sendMessage(message3);
                 } catch (TelegramApiException e) {
@@ -45,7 +45,13 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 message_text = "Здарова "+ user_first_name + ", что бы получить список доступных команд введи /help";
                 System.out.println(message_text);
                 long chat_id = update.getMessage().getChatId();
-                SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);}
+                SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            }
 
 
             else if (update.getMessage().getText().equals("/bash")){
@@ -57,23 +63,44 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 }
                 long chat_id = update.getMessage().getChatId();
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
                 }
+            }
             else if (update.getMessage().getText().equals("/moneta")){
 
                     message_text = moneta.moneta();
                     System.out.println(message_text);
                 long chat_id = update.getMessage().getChatId();
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
             }
-            else if(update.getMessage().getText().equals("/dzhan")) {
-                message_text = "Джан молодец";
+            else if(update.getMessage().getText().equals("/test")) {
+                try {
+                    message_text = message.sendMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.out.println(message_text);
                 long chat_id = update.getMessage().getChatId();
+                System.out.println(chat_id);
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }
-            else if(update.getMessage().getText().equals("/mixanes")) {
+            else if(update.getMessage().getText().equals("/mix")) {
                 String shutdownCmd = "shutdown -s";
                 try {
                     Process child = Runtime.getRuntime().exec(shutdownCmd);
@@ -82,6 +109,22 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 }
 
             }
+            else if (update.getMessage().getText().equals("/roll")){
+
+                    message_text = "выбрасывает: "+ roll.roll();
+                    System.out.println(message_text);
+
+                long chat_id = update.getMessage().getChatId();
+                SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
 
             else if (update.getMessage().getText().equals("/weather")){
                 try {
@@ -92,17 +135,14 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 }
                 long chat_id = update.getMessage().getChatId();
             SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
+                try {
+                    sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
 
             }
-            else  message_text = "Неизвестная команда! Что бы получить список доступных комманд введите /help";
-            System.out.println(message_text);
-            long chat_id = update.getMessage().getChatId();
-            SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
-            try {
-                sendMessage(message);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+
 
 
         }
