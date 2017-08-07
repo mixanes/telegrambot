@@ -1,3 +1,4 @@
+import org.telegram.telegrambots.api.methods.send.SendDocument;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -32,10 +33,12 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 SendMessage message1 = new SendMessage().setChatId(chat_id).setText(message_text);
                 SendMessage message2 = new SendMessage().setChatId(chat_id).setText("/bash - цитата с башорг");
                 SendMessage message3 = new SendMessage().setChatId(chat_id).setText("/moneta - подкинуть монетку");
+                SendMessage message4 = new SendMessage().setChatId(chat_id).setText("/gif - получить гифку");
                 try {
                     sendMessage(message1);
                     sendMessage(message2);
                     sendMessage(message3);
+                    sendMessage(message4);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -118,6 +121,36 @@ public class MyAmazingBot extends TelegramLongPollingBot {
                 SendMessage message = new SendMessage().setChatId(chat_id).setText(message_text);
                 try {
                     sendMessage(message);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else if (update.getMessage().getText().substring(0,4).equals("/gif")){
+                if (update.getMessage().getText().length() > 5) {
+
+
+                try {
+                    message_text = gif.gif(update.getMessage().getText().substring(5));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(message_text);
+
+                long chat_id = update.getMessage().getChatId();
+                SendDocument sendDocument = new SendDocument().setChatId(chat_id).setDocument(message_text);
+                }
+                else  try {
+                    message_text = gif.gif(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(message_text);
+
+                long chat_id = update.getMessage().getChatId();
+                SendDocument sendDocument = new SendDocument().setChatId(chat_id).setDocument(message_text);
+                try {
+                    sendDocument(sendDocument);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }

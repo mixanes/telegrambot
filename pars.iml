@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jsoup-1.10.3" level="project" />
     <orderEntry type="library" name="telegrambots-3.2-jar-with-dependencies" level="project" />
+    <orderEntry type="library" name="gson-2.8.1" level="project" />
   </component>
 </module>
